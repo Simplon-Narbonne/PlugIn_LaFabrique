@@ -45,7 +45,7 @@ function r_KillChevron(chaine)
   else
   {
     b = chaine.indexOf('>');
-    newStr = chaine.slice(b+1, chaine.length).trim();
+    newStr = chaine.slice(b+1, chaine.length);
     a = newStr.indexOf('<');
     if(newStr[0] != '<')
     {
@@ -61,11 +61,15 @@ function r_KillChevron(chaine)
         }
         //console.log(tabStr);
         tabStr = [];
-        r_KillChevron(strFinale);
+        //return strFinale;
+        //r_KillChevron(strFinale);
       }
       //console.log(tabStr);
       //console.log(newStr);
-      r_KillChevron(newStr);
+      else
+      {
+        r_KillChevron(newStr);
+      }
     }
     else
     {
@@ -89,7 +93,14 @@ function testOtherDomain(url)
       comments = tags[i].getElementsByTagName("comments");
       category = tags[i].getElementsByTagName("category");
       pubDate = tags[i].getElementsByTagName("pubDate");
-      auteur = tags[i].getElementsByTagName("dc:creator");
+      if(navigator.userAgent.indexOf("Chrome") != -1 )
+      {
+        auteur = tags[i].getElementsByTagName("creator");
+      }
+      else if(navigator.userAgent.indexOf("Firefox") != -1 )
+      {
+        auteur = tags[i].getElementsByTagName("dc:creator");
+      }
       guid = tags[i].getElementsByTagName("guid");
       tabItem = [title, link, description, comments, category, pubDate, auteur, guid];
       getExistDiv = document.querySelector("#gxBaseContenu");
@@ -101,18 +112,17 @@ function testOtherDomain(url)
           //debugStr = tabItem[j][0].childNodes[0].nodeValue;
           //console.log(tabItem[j][0].childNodes[0].nodeValue);
           //console.log(r_KillChevron(tabItem[j][0].childNodes[0].nodeValue));
-          strDesc = r_KillChevron(tabItem[j][0].childNodes[0].nodeValue);
-          console.log(strDesc);
+          //strDesc = r_KillChevron(tabItem[j][0].childNodes[0].nodeValue);
+          r_KillChevron(tabItem[j][0].childNodes[0].nodeValue);
+          //console.log(strDesc);
           target = document.querySelector('div'+i);
           //console.log(target);
-
-
-          //target.innerHTML += strFinale; Marche, mais bricolage degueux
-          target.innerHTML += strDesc; //UNDEFINED DE MERDEEEEE !
-
+          target.innerHTML += strFinale; //Marche, mais bricolage degueux
+          //target.innerHTML += strDesc; //UNDEFINED DE MERDEEEEE !
           //appel fonction recursive pour virer les chevrons et leur contenu, retourne une chaine de caractere a traiter (decode html)
         }
         var createPara = document.createElement("p");
+        console.log(tabItem);
         var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
         createPara.appendChild(createTextNode);
         createDiv.appendChild(createPara);
@@ -120,7 +130,7 @@ function testOtherDomain(url)
       }
     }
   }
-  xhr.open("GET", url, "false");
+  xhr.open("GET", url);
   xhr.send();
 }
 
