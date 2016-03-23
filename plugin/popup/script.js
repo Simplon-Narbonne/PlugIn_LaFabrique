@@ -1,6 +1,6 @@
 //Ajoute un evenement sur le clic du lien (redirection vers onglet deja ouvert)
 
-var element = document.querySelector('#scriptOnglet');
+/*var element = document.querySelector('#scriptOnglet');
 
 element.addEventListener('click', function() {
 
@@ -20,3 +20,4 @@ element.addEventListener('click', function() {
     }
   });
 }, false);
+*/
