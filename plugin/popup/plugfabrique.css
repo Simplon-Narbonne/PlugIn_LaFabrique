@@ -1,11 +1,12 @@
 html, body
 {
-  height: auto;
-  width: auto;
+  height: 500px;
+  width: 500px;
   margin: 0;
   background: #FF0000!important;
 }
 
+/*
 ul , li
 {
   list-style-type: none;
@@ -79,3 +80,4 @@ a
   margin-top: 300px;
   background:#0000FF!important;
 }
+*/

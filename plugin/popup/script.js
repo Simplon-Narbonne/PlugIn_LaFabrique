@@ -62,9 +62,9 @@ function testOtherDomain(url)
       title = tags[i].getElementsByTagName("title");
       link = tags[i].getElementsByTagName("link");
       description = tags[i].getElementsByTagName("description");
-      //comments = tags[i].getElementsByTagName("comments");
-      //category = tags[i].getElementsByTagName("category");
-      //pubDate = tags[i].getElementsByTagName("pubDate");
+      /*comments = tags[i].getElementsByTagName("comments");
+      category = tags[i].getElementsByTagName("category");
+      pubDate = tags[i].getElementsByTagName("pubDate");
       if(navigator.userAgent.indexOf("Chrome") != -1 )
       {
         auteur = tags[i].getElementsByTagName("creator");
@@ -73,14 +73,27 @@ function testOtherDomain(url)
       {
         auteur = tags[i].getElementsByTagName("dc:creator");
       }
-      //guid = tags[i].getElementsByTagName("guid");
-      tabItem = [title, description, link];
+      guid = tags[i].getElementsByTagName("guid");*/
+      tabItem = [link, title, description];
       getExistDiv = document.querySelector("#Contenu");
-      createDivAuto = document.createElement("div"+i);
+      var dynDiv = "div" + (i+1);
+      createDivAuto = document.createElement(dynDiv);
       createDivArticle = document.createElement('div');
       createDivArticle.setAttribute("class", "article");
       for (var j = 0; j < tabItem.length; j++)
       {
+        if (tabItem[j] == link)
+        {
+          var createLink = document.createElement("a");
+          var dynLink = tabItem[j][0].childNodes[0].nodeValue;
+          createLink.setAttribute("href", dynLink);
+          createLink.setAttribute("class", "lien");
+          createLink.setAttribute("target", "_blank");
+          createLink.appendChild(createDivArticle);
+          createDivAuto.appendChild(createLink);
+          getExistDiv.appendChild(createDivAuto);
+        }
+
         if (tabItem[j] == title)
         {
           var createTitle = document.createElement("h1");
@@ -88,27 +101,21 @@ function testOtherDomain(url)
           var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
           createTitle.appendChild(createTextNode);
           createDivArticle.appendChild(createTitle);
-          getExistDiv.appendChild(createDivArticle);
         }
-        else if(tabItem[j] == description)
+
+        if(tabItem[j] == description)
         {
           strDesc = r_DestroyTags(tabItem[j][0].childNodes[0].nodeValue);
           var createPara = document.createElement("p");
           createPara.setAttribute("class", "paragraphe");
-          var sa_id = "innerP"+(i+1);
-          createPara.setAttribute("id", sa_id);
+          var setAtt_id = "innerP"+(i+1);
+          createPara.setAttribute("id", setAtt_id);
           createDivArticle.appendChild(createPara);
-          getExistDiv.appendChild(createDivArticle);
-          var qs_id = "#innerP"+(i+1);
-          console.log(qs_id);
-          var target = document.querySelector(qs_id);
+          var queSel_id = "#innerP"+(i+1);
+          var target = document.querySelector(queSel_id);
           target.innerHTML += strDesc;
         }
       }
-      //ajoute le title a la div Article
-      //ajoute le paragraphe a la div Article
-
-      //p-e ici target.innerHTML += strDesc;
     }
   }
   xhr.open("GET", url);
@@ -119,27 +126,3 @@ var buttonClick = document.querySelector('body button');
 buttonClick.addEventListener("click", function(e){
   testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
 }, false);
-
-//Ajoute un evenement sur le clic du lien (redirection vers onglet deja ouvert)
-/*
-var element = document.querySelector('#scriptOnglet');
-
-element.addEventListener('click', function() {
-
-  chrome.tabs.query({'title': 'La Fabrique à Innovations | Donnez vie à vos idées !'}, tabs => {
-    if (tabs.length === 0)
-    {
-      chrome.tabs.create({'url': 'http://lafabriqueainnovations.com/', 'active': true});
-    }
-    else
-    {
-      chrome.tabs.query({'title': 'La Fabrique à Innovations | Donnez vie à vos idées !', 'active': true}, active => {
-        if (active.length === 0)
-        {
-          chrome.tabs.update(tabs[0].id, {'active': true});
-        }
-      });
-    }
-  });
-}, false);
-*/
