@@ -23,58 +23,55 @@ element.addEventListener('click', function() {
 */
 
 
-  /*
-  parcours la chaine et cherche le premier chevron ouvrant et prend son index (a)
-  parcours la chaine et cherche le premier chevron fermant et prend son index (b)
-  supprime de la chaine l'intervale entre l'index a et l'index b
-  si il n'y a plus de chevrons ouvrant ET fermant, retourne la string
-  sinon rapelle la fonction
-  et l'insere avec inner html
-  trim() trim pour virer les espaces
-  */
+/*
+  ***a besoin d'un tableau global vide (tabStr) et d'une string en parametre (chaine)***
+  si (chaine) n'a aucun chevron, retourne (chaine) amputé des espaces en debut et fin de string [.trim()].
+  cherche le premier chevron fermant dans (chaine) et prend son index (a).
+  supprime de (chaine) l'intervale entre l'index 0 et (b+1), affecte le resultat a (newStr).
+  cherche le premier chevron ouvrant dans (newStr) et prend son index (b).
+  si le premier caractere de (newStr) n'est pas un chevron ouvrant,,
+    ajoute dans (tabStr) la string dans l'intervale entre l'index 0 et (b).
+    si le dernier index de (tabStr) est une string vide,,
+      declare et affecte une string vide a (strFinale).
+      |parcours (tabStr) avec une boucle et concatene a chaque tour dans (strFinale), sauf 2 derniers index.|
+      vide (tabStr) pour les prochains appels de fonction.
+      rappelle (r_DestroyTags) et retourne sa valeur
+
+*/
 
 var tabStr = [];
-var strFinale = "";
 
-function r_KillChevron(chaine)
+function r_DestroyTags(chaine)
 {
-  if (chaine.indexOf('<') == -1 || chaine.indexOf('>') == -1)
+  if (chaine.indexOf('<') == -1 && chaine.indexOf('>') == -1) //condition d'arret
   {
-    return chaine;
+    return chaine.trim();
   }
-  else
+
+  a = chaine.indexOf('>');
+  newStr = chaine.slice(a+1, chaine.length);
+  b = newStr.indexOf('<');
+  if(newStr[0] != '<')
   {
-    b = chaine.indexOf('>');
-    newStr = chaine.slice(b+1, chaine.length);
-    a = newStr.indexOf('<');
-    if(newStr[0] != '<')
+    tabStr.push(newStr.slice(0, b));
+    if (tabStr[tabStr.length-1] == "")
     {
-      tabStr.push(newStr.slice(0, a));
-      //de l'index 0 a a-1 stocke la chaine dans tabStr.
-      //quand cest fini, concatene le tableau et return la string
-      if (tabStr[tabStr.length-1] == "")
+      strFinale = "";
+      for (var k=0; k < (tabStr.length-2);k++)
       {
-        strFinale = "";
-        for (var k=0; k < (tabStr.length-2);k++)
-        {
-          strFinale += tabStr[k];
-        }
-        //console.log(tabStr);
-        tabStr = [];
-        //return strFinale;
-        //r_KillChevron(strFinale);
+        strFinale += tabStr[k];
       }
-      //console.log(tabStr);
-      //console.log(newStr);
-      else
-      {
-        r_KillChevron(newStr);
-      }
+      tabStr = [];
+      return r_DestroyTags(strFinale);
     }
     else
     {
-      r_KillChevron(newStr);
+      return r_DestroyTags(newStr);
     }
+  }
+  else
+  {
+    return r_DestroyTags(newStr);
   }
 }
 
@@ -109,20 +106,12 @@ function testOtherDomain(url)
       {
         if(tabItem[j] == description)
         {
-          //debugStr = tabItem[j][0].childNodes[0].nodeValue;
-          //console.log(tabItem[j][0].childNodes[0].nodeValue);
-          //console.log(r_KillChevron(tabItem[j][0].childNodes[0].nodeValue));
-          //strDesc = r_KillChevron(tabItem[j][0].childNodes[0].nodeValue);
-          r_KillChevron(tabItem[j][0].childNodes[0].nodeValue);
-          //console.log(strDesc);
+          strDesc = r_DestroyTags(tabItem[j][0].childNodes[0].nodeValue);
+          console.log(strDesc);
           target = document.querySelector('div'+i);
-          //console.log(target);
-          target.innerHTML += strFinale; //Marche, mais bricolage degueux
-          //target.innerHTML += strDesc; //UNDEFINED DE MERDEEEEE !
-          //appel fonction recursive pour virer les chevrons et leur contenu, retourne une chaine de caractere a traiter (decode html)
+          target.innerHTML += strDesc;
         }
         var createPara = document.createElement("p");
-        console.log(tabItem);
         var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
         createPara.appendChild(createTextNode);
         createDiv.appendChild(createPara);
