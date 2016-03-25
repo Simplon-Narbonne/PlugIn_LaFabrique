@@ -122,7 +122,10 @@ function testOtherDomain(url)
   xhr.send();
 }
 
-var buttonClick = document.querySelector('body button');
+testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
+
+/*var buttonClick = document.querySelector('body button');
 buttonClick.addEventListener("click", function(e){
   testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
 }, false);
+*/

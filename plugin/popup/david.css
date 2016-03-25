@@ -1,4 +1,12 @@
-.mainpage
+html, body
+{
+    width:100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#contenu
 {
   width: 302px;
   height: 402px;
@@ -6,49 +14,44 @@
   position: absolute;
 }
 
-.annonce
+.article
 {
   width: 260px;
   height: 160px;
+  margin: auto;
+  margin-top: 2%;
   padding: 10px;
   background-color: #2b2938;
-  color: white;
+  color: #fff;
 }
 
-.haut
-{
-  position: absolute;
-  top: 10px;
-  left: 10px;
-}
-
-.bas
-{
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-}
-
-h1
+.titre
 {
   font-family: sans-serif;
   position: relative;
-  top: -15px;
+  top: -10%;
 }
 
-p
+.paragraphe
 {
+  position: relative;
+  top: -15%;
+  left: 10%;
   color: #666;
 }
 
-button
+.lien
 {
-  color: white;
-  background: #cd0051;
-  background: linear-gradient( #e47ea7, #ad0c4b);
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  border-radius: 8px;
-  border: none;
+  text-decoration: none;
+}
+
+.article:hover
+{
+  background-color: #CD0051;
+  color: #fff;
+}
+
+.paragraphe:hover
+{
+  color: #fff;
 }
