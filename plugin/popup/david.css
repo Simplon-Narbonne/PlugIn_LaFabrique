@@ -25,6 +25,12 @@ html, body
   color: #fff;
 }
 
+.article:hover
+{
+  background-color: #CD0051;
+  color: #fff;
+}
+
 .titre
 {
   font-family: sans-serif;
@@ -40,18 +46,12 @@ html, body
   color: #666;
 }
 
-.lien
-{
-  text-decoration: none;
-}
-
-.article:hover
-{
-  background-color: #CD0051;
-  color: #fff;
-}
-
 .paragraphe:hover
 {
   color: #fff;
+}
+
+.lien
+{
+  text-decoration: none;
 }
