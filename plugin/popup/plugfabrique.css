@@ -5,10 +5,10 @@ html
     margin:0;
     overflow: hidden;
     background: #ecf0f1;
-
 }
 
-.article{
+.article
+{
     height: auto;
     width: 380px;
     margin-top: 10px;
@@ -19,7 +19,9 @@ html
     transition: all 0.5s ease 0s;
     padding: 3% 1.5% 3% 1.5%;
 }
-.article:hover {
+
+.article:hover
+{
     height: auto;
     width: 380px;
     margin-top: 10px;
@@ -28,27 +30,32 @@ html
     margin-left: 5px;
     margin-right: 5px;
     transition: all 0.5s ease 0s;
-      padding: 3% 1.5% 3% 1.5%;
+    padding: 3% 1.5% 3% 1.5%;
 }
 
 .titre
 {
-color: #ecf0f1;
-font-weight: bolder;
-font-size: 17px;
-font-family: 'Quicksand', 'Lato',sans-serif !important;
-text-align: center;
+    color: #ecf0f1;
+    font-weight: bolder;
+    font-size: 17px;
+    font-family: 'Quicksand', 'Lato',sans-serif !important;
+    text-align: center;
 }
-.paragraphe{
-  margin-left: 8%;
-  color: white;
-  margin-top: ;
-font-family: 'Lato', sans-serif;
 
+.paragraphe
+{
+    margin-left: 8%;
+    color: white;
+    margin-top: ;
+    font-family: 'Lato', sans-serif;
 }
-.contenu{
-  text-decoration: none;
+
+.contenu
+{
+    text-decoration: none;
 }
-.lien {
+
+.lien
+{
     text-decoration: none;
 }
