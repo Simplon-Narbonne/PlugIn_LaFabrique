@@ -1,7 +1,9 @@
 html, body
 {
-  width: 500px;
-  height: 500px;
+    width:100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #contenu
@@ -23,6 +25,12 @@ html, body
   color: #fff;
 }
 
+.article:hover
+{
+  background-color: #CD0051;
+  color: #fff;
+}
+
 .titre
 {
   font-family: sans-serif;
@@ -38,13 +46,12 @@ html, body
   color: #666;
 }
 
-.lien {
+.paragraphe:hover
+{
+  color: #fff;
+}
+
+.lien
+{
   text-decoration: none;
-}
-.article:hover {
-  background-color: #CD0051;
-  color: #fff;
-}
-.paragraphe:hover {
-  color: #fff;
 }

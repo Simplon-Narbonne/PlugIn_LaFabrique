@@ -62,7 +62,7 @@ function testOtherDomain(url)
       title = tags[i].getElementsByTagName("title");
       link = tags[i].getElementsByTagName("link");
       description = tags[i].getElementsByTagName("description");
-      comments = tags[i].getElementsByTagName("comments");
+      /*comments = tags[i].getElementsByTagName("comments");
       category = tags[i].getElementsByTagName("category");
       pubDate = tags[i].getElementsByTagName("pubDate");
       if(navigator.userAgent.indexOf("Chrome") != -1 )
@@ -73,24 +73,48 @@ function testOtherDomain(url)
       {
         auteur = tags[i].getElementsByTagName("dc:creator");
       }
-      guid = tags[i].getElementsByTagName("guid");
-      tabItem = [title, link, description, comments, category, pubDate, auteur, guid];
-      getExistDiv = document.querySelector("#gxBaseContenu");
-      createDiv = document.createElement("div"+i);
+      guid = tags[i].getElementsByTagName("guid");*/
+      tabItem = [link, title, description];
+      getExistDiv = document.querySelector("#Contenu");
+      var dynDiv = "div" + (i+1);
+      createDivAuto = document.createElement(dynDiv);
+      createDivArticle = document.createElement('div');
+      createDivArticle.setAttribute("class", "article");
       for (var j = 0; j < tabItem.length; j++)
       {
+        if (tabItem[j] == link)
+        {
+          var createLink = document.createElement("a");
+          var dynLink = tabItem[j][0].childNodes[0].nodeValue;
+          createLink.setAttribute("href", dynLink);
+          createLink.setAttribute("class", "lien");
+          createLink.setAttribute("target", "_blank");
+          createLink.appendChild(createDivArticle);
+          createDivAuto.appendChild(createLink);
+          getExistDiv.appendChild(createDivAuto);
+        }
+
+        if (tabItem[j] == title)
+        {
+          var createTitle = document.createElement("h1");
+          createTitle.setAttribute("class", "title");
+          var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
+          createTitle.appendChild(createTextNode);
+          createDivArticle.appendChild(createTitle);
+        }
+
         if(tabItem[j] == description)
         {
           strDesc = r_DestroyTags(tabItem[j][0].childNodes[0].nodeValue);
-          console.log(strDesc);
-          target = document.querySelector('div'+i);
+          var createPara = document.createElement("p");
+          createPara.setAttribute("class", "paragraphe");
+          var setAtt_id = "innerP"+(i+1);
+          createPara.setAttribute("id", setAtt_id);
+          createDivArticle.appendChild(createPara);
+          var queSel_id = "#innerP"+(i+1);
+          var target = document.querySelector(queSel_id);
           target.innerHTML += strDesc;
         }
-        var createPara = document.createElement("p");
-        var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
-        createPara.appendChild(createTextNode);
-        createDiv.appendChild(createPara);
-        getExistDiv.appendChild(createDiv);
       }
     }
   }
@@ -100,8 +124,8 @@ function testOtherDomain(url)
 
 testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
 
-//var url = 'http://51.255.196.206/greg/testXHR/rss.xml';
-//var buttonClick = document.querySelector('body button');
-//buttonClick.addEventListener("click", function(e){
-  //testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
-//}, false);
+/*var buttonClick = document.querySelector('body button');
+buttonClick.addEventListener("click", function(e){
+  testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
+}, false);
+*/
