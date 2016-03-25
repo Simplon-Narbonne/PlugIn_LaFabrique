@@ -97,7 +97,7 @@ function testOtherDomain(url)
         if (tabItem[j] == title)
         {
           var createTitle = document.createElement("h1");
-          createTitle.setAttribute("class", "title");
+          createTitle.setAttribute("class", "titre");
           var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
           createTitle.appendChild(createTextNode);
           createDivArticle.appendChild(createTitle);
@@ -124,8 +124,22 @@ function testOtherDomain(url)
 
 testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
 
+function delDiv ()
+{
+
+}
+
 /*var buttonClick = document.querySelector('body button');
 buttonClick.addEventListener("click", function(e){
   testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
 }, false);
+*/
+
+/*
+  *** todolist ***
+  - sur clic, efface la div parente du lien et son contenu
+  - sauvegarder les infos des articles deja vus dans le local storage
+  - empecher l'affichage des articles deja vus/cliqués
+  - trouver le ;oyen de ne pas saturer le serveur avec les requetes xhr (sorte de cache)
+
 */
