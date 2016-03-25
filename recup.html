@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="xml2json.js"></script>
+<script src="jquery.xml2json.js"></script>
+
+<style>
+.submit_login{
+background: red;
+}
+</style>
+
+</head>
+<body>
+<script>
+
+$(document).ready(function() {
+$('.submit_login').click(function(){
+  console.log('envoie de la requete');
+  $.ajax({
+     url : 'http://51.255.196.206/greg/testXHR/rss.xml',
+     //url : 'http://www.lequipe.fr/rss/actu_rss.xml',
+     type : 'GET', // Le type de la requête HTTP, ici devenu POST
+     dataType : 'xml',
+     success : function(code_xml, statut){ // code_html contient le HTML renvoyé
+        console.log('ici');
+        console.log(code_xml);
+        var json = $.xml2json(code_xml);
+        console.log(json);
+        alert(json.channel.item.length);
+        for (var k=0; k < (json.channel.item.length);k++)
+        {
+alert(json.channel.item[k].title);        }
+        $(".resultat").html(json.channel.description);
+     }
+  });
+});
+});
+
+</script>
+<button onclick="xml2js()" value="Go" >GOgogo</button>
+<div class="submit_login">Envoyer<div>
+<div class="resultat"></div>
+</body>
+
+
+</html>
