@@ -98,8 +98,10 @@ function testOtherDomain(url)
   xhr.send();
 }
 
+testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
+
 //var url = 'http://51.255.196.206/greg/testXHR/rss.xml';
-var buttonClick = document.querySelector('body button');
-buttonClick.addEventListener("click", function(e){
-  testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
-}, false);
+//var buttonClick = document.querySelector('body button');
+//buttonClick.addEventListener("click", function(e){
+  //testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
+//}, false);
