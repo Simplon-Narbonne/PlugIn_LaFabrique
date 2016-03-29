@@ -123,11 +123,12 @@ function testOtherDomain(url)
 }
 
 testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
+//testOtherDomain("http://lafabriqueainnovations.com/rss.xml");
 
-function delDiv ()
+/*function delDiv ()
 {
 
-}
+}*/
 
 /*var buttonClick = document.querySelector('body button');
 buttonClick.addEventListener("click", function(e){
@@ -139,10 +140,9 @@ buttonClick.addEventListener("click", function(e){
   *** todolist ***
   1 - refaire le back end :
       - xhr running on background
-      - 
-  2 - sur clic, efface la div parente du lien et son contenu
-  3 - sauvegarder les infos des articles deja vus dans le local storage
+      - check periodique avec setInterval
+  2 - sauvegarder les infos des articles deja vus dans le local storage
+  3 - sur clic, efface la div parente du lien et son contenu
   4 - empecher l'affichage des articles deja vus/cliqués
   5 - trouver le moyen de ne pas saturer le serveur avec les requetes xhr (sorte de cache)
-
 */
