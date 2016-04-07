@@ -138,6 +138,7 @@ buttonClick.addEventListener("click", function(e){
 
 /*
   *** todolist ***
+  1 - ajouter le badge sur l'icone (badge = nombre d'article dans la liste)
   1 - refaire le back end :
       - xhr running on background
       - check periodique avec setInterval
