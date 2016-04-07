@@ -11,41 +11,32 @@
       |parcours (tabStr) avec une boucle et concatene a chaque tour dans (strFinale), sauf 2 derniers index.|
       vide (tabStr) pour les prochains appels de fonction.
       rappelle (r_DestroyTags) et retourne sa valeur
-
 */
 
 var tabStr = [];
 
 function r_DestroyTags(chaine)
 {
-  if (chaine.indexOf('<') == -1 && chaine.indexOf('>') == -1) //condition d'arret
-  {
+  if (chaine.indexOf('<') == -1 && chaine.indexOf('>') == -1) {
     return chaine.trim();
   }
 
   a = chaine.indexOf('>');
   newStr = chaine.slice(a+1, chaine.length);
   b = newStr.indexOf('<');
-  if(newStr[0] != '<')
-  {
+  if(newStr[0] != '<') {
     tabStr.push(newStr.slice(0, b));
-    if (tabStr[tabStr.length-1] == "")
-    {
+    if (tabStr[tabStr.length-1] == "") {
       strFinale = "";
-      for (var k=0; k < (tabStr.length-2);k++)
-      {
+      for (var k=0; k < (tabStr.length-2);k++) {
         strFinale += tabStr[k];
       }
       tabStr = [];
       return r_DestroyTags(strFinale);
-    }
-    else
-    {
+    } else {
       return r_DestroyTags(newStr);
     }
-  }
-  else
-  {
+  } else {
     return r_DestroyTags(newStr);
   }
 }
@@ -62,18 +53,6 @@ function testOtherDomain(url)
       title = tags[i].getElementsByTagName("title");
       link = tags[i].getElementsByTagName("link");
       description = tags[i].getElementsByTagName("description");
-      /*comments = tags[i].getElementsByTagName("comments");
-      category = tags[i].getElementsByTagName("category");
-      pubDate = tags[i].getElementsByTagName("pubDate");
-      if(navigator.userAgent.indexOf("Chrome") != -1 )
-      {
-        auteur = tags[i].getElementsByTagName("creator");
-      }
-      else if(navigator.userAgent.indexOf("Firefox") != -1 )
-      {
-        auteur = tags[i].getElementsByTagName("dc:creator");
-      }
-      guid = tags[i].getElementsByTagName("guid");*/
       tabItem = [link, title, description];
       getExistDiv = document.querySelector("#Contenu");
       var dynDiv = "div" + (i+1);
@@ -124,26 +103,3 @@ function testOtherDomain(url)
 
 testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
 //testOtherDomain("http://lafabriqueainnovations.com/rss.xml");
-
-/*function delDiv ()
-{
-
-}*/
-
-/*var buttonClick = document.querySelector('body button');
-buttonClick.addEventListener("click", function(e){
-  testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
-}, false);
-*/
-
-/*
-  *** todolist ***
-  1 - ajouter le badge sur l'icone (badge = nombre d'article dans la liste)
-  1 - refaire le back end :
-      - xhr running on background
-      - check periodique avec setInterval
-  2 - sauvegarder les infos des articles deja vus dans le local storage
-  3 - sur clic, efface la div parente du lien et son contenu
-  4 - empecher l'affichage des articles deja vus/cliqués
-  5 - trouver le moyen de ne pas saturer le serveur avec les requetes xhr (sorte de cache)
-*/
