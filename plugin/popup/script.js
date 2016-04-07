@@ -13,93 +13,93 @@
       rappelle (r_DestroyTags) et retourne sa valeur
 */
 
-var tabStr = [];
-
+var tabStr = []; //necessaire pour r_DestroyTags
 function r_DestroyTags(chaine)
 {
-  if (chaine.indexOf('<') == -1 && chaine.indexOf('>') == -1) {
-    return chaine.trim();
-  }
-
-  a = chaine.indexOf('>');
-  newStr = chaine.slice(a+1, chaine.length);
-  b = newStr.indexOf('<');
-  if(newStr[0] != '<') {
-    tabStr.push(newStr.slice(0, b));
-    if (tabStr[tabStr.length-1] == "") {
-      strFinale = "";
-      for (var k=0; k < (tabStr.length-2);k++) {
-        strFinale += tabStr[k];
-      }
-      tabStr = [];
-      return r_DestroyTags(strFinale);
-    } else {
-      return r_DestroyTags(newStr);
+    if (chaine.indexOf('<') == -1 && chaine.indexOf('>') == -1) {
+        return chaine.trim();
     }
-  } else {
-    return r_DestroyTags(newStr);
-  }
+    a = chaine.indexOf('>');
+    newStr = chaine.slice(a+1, chaine.length);
+    b = newStr.indexOf('<');
+    if(newStr[0] != '<') {
+        tabStr.push(newStr.slice(0, b));
+        if (tabStr[tabStr.length-1] == "") {
+            strFinale = "";
+            for (var k=0; k < (tabStr.length-2);k++) {
+                strFinale += tabStr[k];
+            }
+            tabStr = []; //remet tabStr a 0 avant de renvoyer le resultat final
+            return r_DestroyTags(strFinale);
+        } else {
+            return r_DestroyTags(newStr);
+        }
+    } else {
+        return r_DestroyTags(newStr);
+    }
 }
 
-function testOtherDomain(url)
+function getXML(url)
 {
-  var xhr = new XMLHttpRequest;
+    var xhr = new XMLHttpRequest;
+    xhr.onload = function(){
+        parseXML(xhr.responseXML);
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
 
-  xhr.onload = function(){
-    var texteRecup = xhr.responseXML;
-    tags = texteRecup.getElementsByTagName("item");
+function parseXML(xmlRecup)
+{
+    var tags = xmlRecup.getElementsByTagName("item");
     for (var i = 0; i < tags.length; i++)
     {
-      title = tags[i].getElementsByTagName("title");
-      link = tags[i].getElementsByTagName("link");
-      description = tags[i].getElementsByTagName("description");
-      tabItem = [link, title, description];
-      getExistDiv = document.querySelector("#Contenu");
-      var dynDiv = "div" + (i+1);
-      createDivAuto = document.createElement(dynDiv);
-      createDivArticle = document.createElement('div');
-      createDivArticle.setAttribute("class", "article");
-      for (var j = 0; j < tabItem.length; j++)
-      {
-        if (tabItem[j] == link)
+        title = tags[i].getElementsByTagName("title");
+        link = tags[i].getElementsByTagName("link");
+        description = tags[i].getElementsByTagName("description");
+        tabItem = [link, title, description];
+        getExistDiv = document.querySelector("#Contenu");
+        var dynDiv = "div" + (i+1);
+        createDivAuto = document.createElement(dynDiv);
+        createDivArticle = document.createElement('div');
+        createDivArticle.setAttribute("class", "article");
+        for (var j = 0; j < tabItem.length; j++)
         {
-          var createLink = document.createElement("a");
-          var dynLink = tabItem[j][0].childNodes[0].nodeValue;
-          createLink.setAttribute("href", dynLink);
-          createLink.setAttribute("class", "lien");
-          createLink.setAttribute("target", "_blank");
-          createLink.appendChild(createDivArticle);
-          createDivAuto.appendChild(createLink);
-          getExistDiv.appendChild(createDivAuto);
-        }
+            if (tabItem[j] == link)
+            {
+                var createLink = document.createElement("a");
+                var dynLink = tabItem[j][0].childNodes[0].nodeValue;
+                createLink.setAttribute("href", dynLink);
+                createLink.setAttribute("class", "lien");
+                createLink.setAttribute("target", "_blank");
+                createLink.appendChild(createDivArticle);
+                createDivAuto.appendChild(createLink);
+                getExistDiv.appendChild(createDivAuto);
+            }
 
-        if (tabItem[j] == title)
-        {
-          var createTitle = document.createElement("h1");
-          createTitle.setAttribute("class", "titre");
-          var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
-          createTitle.appendChild(createTextNode);
-          createDivArticle.appendChild(createTitle);
-        }
+            if (tabItem[j] == title)
+            {
+                var createTitle = document.createElement("h1");
+                createTitle.setAttribute("class", "titre");
+                var createTextNode = document.createTextNode(tabItem[j][0].childNodes[0].nodeValue);
+                createTitle.appendChild(createTextNode);
+                createDivArticle.appendChild(createTitle);
+            }
 
-        if(tabItem[j] == description)
-        {
-          strDesc = r_DestroyTags(tabItem[j][0].childNodes[0].nodeValue);
-          var createPara = document.createElement("p");
-          createPara.setAttribute("class", "paragraphe");
-          var setAtt_id = "innerP"+(i+1);
-          createPara.setAttribute("id", setAtt_id);
-          createDivArticle.appendChild(createPara);
-          var queSel_id = "#innerP"+(i+1);
-          var target = document.querySelector(queSel_id);
-          target.innerHTML += strDesc;
+            if(tabItem[j] == description)
+            {
+                strDesc = r_DestroyTags(tabItem[j][0].childNodes[0].nodeValue);
+                var createPara = document.createElement("p");
+                createPara.setAttribute("class", "paragraphe");
+                var setAtt_id = "innerP"+(i+1);
+                createPara.setAttribute("id", setAtt_id);
+                createDivArticle.appendChild(createPara);
+                var queSel_id = "#innerP"+(i+1);
+                var target = document.querySelector(queSel_id);
+                target.innerHTML += strDesc;
+            }
         }
-      }
     }
-  }
-  xhr.open("GET", url);
-  xhr.send();
 }
 
-testOtherDomain('http://51.255.196.206/greg/testXHR/rss.xml');
-//testOtherDomain("http://lafabriqueainnovations.com/rss.xml");
+getXML('http://51.255.196.206/greg/testXHR/rss.xml');
