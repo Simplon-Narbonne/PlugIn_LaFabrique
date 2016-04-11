@@ -4,7 +4,11 @@ html
   width: 500px;
   margin:0;
   overflow: hidden;
-  background: #ecf0f1;
+  background: rgb(39,40,39);
+  background: -moz-linear-gradient(left, rgba(39,40,39,1) 0%, rgba(61,61,61,1) 37%, rgba(77,79,77,1) 70%, rgba(104,107,106,1) 100%);
+  background: -webkit-linear-gradient(left, rgba(39,40,39,1) 0%,rgba(61,61,61,1) 37%,rgba(77,79,77,1) 70%,rgba(104,107,106,1) 100%);
+  background: linear-gradient(to right, rgba(39,40,39,1) 0%,rgba(61,61,61,1) 37%,rgba(77,79,77,1) 70%,rgba(104,107,106,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#272827', endColorstr='#686b6a',GradientType=0 );
 }
 
 .article
@@ -44,12 +48,13 @@ html
 
 .paragraphe
 {
-  margin-left: 8%;
-  color: white;
-  margin-top: ;
-  font-family: 'Lato', sans-serif;
-  margin-right: 8%;
-  text-align : justify;
+    margin-left: 8%;
+    color: white;
+    margin-top: ;
+    font-family: 'Lato', sans-serif;
+    margin-right: 8%;
+    text-align : justify;
+    font-size: 12px;
 }
 
 .contenu
