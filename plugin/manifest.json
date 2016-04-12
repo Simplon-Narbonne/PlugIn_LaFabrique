@@ -16,6 +16,10 @@
     }
   },
 
+  "background": {
+    "scripts": ["test.js"]
+  },
+
   "homepage_url": "https://github.com/Simplon-Narbonne/PlugIn_LaFabrique",
 
   "browser_action": {

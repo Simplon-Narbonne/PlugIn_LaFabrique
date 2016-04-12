@@ -39,16 +39,6 @@ function r_DestroyTags(chaine)
     }
 }
 
-function getXML(url)
-{
-    var xhr = new XMLHttpRequest;
-    xhr.onload = function(){
-        parseXML(xhr.responseXML);
-    }
-    xhr.open("GET", url);
-    xhr.send();
-}
-
 function parseXML(xmlRecup)
 {
     var tags = xmlRecup.getElementsByTagName("item");
@@ -102,4 +92,29 @@ function parseXML(xmlRecup)
     }
 }
 
-getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+function prepareXML(ls_XML)
+{
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(ls_XML, "text/xml");
+    return doc;
+}
+
+
+if(localStorage.getItem("pf_originXML"))
+{
+    var xmlReady = prepareXML(localStorage.getItem("pf_originXML"));
+    parseXML(xmlReady);
+}
+else
+{
+    console.log("pf_originXML n'existe pas dans le localStorage");
+}
+
+
+/*browser.runtime.getBackgroundPage(
+    function(bkg)
+    {
+        parseXML(bkg.minoo);
+    }
+);
+*/
