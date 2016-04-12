@@ -31,9 +31,11 @@ localStorage.clear(); //c'est pour debug, pas utile pour la prod en l'etat
 if(!localStorage.getItem("pf_originXML"))
 {
     getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    //getXML('http://lafabriqueainnovations.com/rss.xml');
 }
 setInterval(function(){
     getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    //getXML('http://lafabriqueainnovations.com/rss.xml');
 }, 30000);
 
 setBadgeNum();

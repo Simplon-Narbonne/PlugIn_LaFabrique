@@ -94,9 +94,16 @@ function parseXML(xmlRecup)
 
 function prepareXML(ls_XML)
 {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(ls_XML, "text/xml");
-    return doc;
+    if (typeof ls_XML == "string")
+    {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(ls_XML, "text/xml");
+        return doc;
+    }
+    else
+    {
+        console.log("Erreur de type: string attendu, " + typeof ls_XML+" reçu.");
+    }
 }
 
 
@@ -114,7 +121,7 @@ else
 /*browser.runtime.getBackgroundPage(
     function(bkg)
     {
-        parseXML(bkg.minoo);
+        parseXML(bkg.mavar);
     }
 );
 */
