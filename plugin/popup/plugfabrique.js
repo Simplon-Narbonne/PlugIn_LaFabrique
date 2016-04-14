@@ -42,6 +42,7 @@ function r_DestroyTags(chaine)
 function parseXML(xmlRecup)
 {
     var tags = xmlRecup.getElementsByTagName("item");
+    console.log(tags);
     for (var i = 0; i < tags.length; i++)
     {
         title = tags[i].getElementsByTagName("title");
@@ -92,22 +93,8 @@ function parseXML(xmlRecup)
     }
 }
 
-function prepareXML(ls_XML)
-{
-    if (typeof ls_XML == "string")
-    {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(ls_XML, "text/xml");
-        return doc;
-    }
-    else
-    {
-        console.log("Erreur de type: string attendu, " + typeof ls_XML+" reçu.");
-    }
-}
 
-
-if(localStorage.getItem("pf_originXML"))
+if(localStorage.getItem("pf_originXML")) //pf = plugin fabrique
 {
     var xmlReady = prepareXML(localStorage.getItem("pf_originXML"));
     parseXML(xmlReady);

@@ -1,8 +1,59 @@
+function prepareXML(ls_XML)
+{
+    if (typeof ls_XML == "string")
+    {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(ls_XML, "text/xml");
+        return doc;
+    }
+    else
+    {
+        console.log("Erreur de type: string attendu, " + typeof ls_XML+" reçu.");
+    }
+}
+
+function decoupeXML()
+{
+
+}
+
+function inLS_comparaisonXML()
+{
+    if(localStorage.getItem("pf_originXML") == localStorage.getItem("pf_newestXML"))
+    {
+        //ne fais rien
+        console.log("inLS_comparaisonXML() = ils sont identiques");
+    }
+    else
+    {
+        console.log("inLS_comparaisonXML() = ils sont differents");
+        console.log(localStorage.getItem("pf_originXML"));
+        console.log(localStorage.getItem("pf_newestXML"));
+
+
+        //decoupeXML(localStorage.getItem("pf_newestXML"));
+        //fais des trucs
+
+        localStorage.pf_originXML = localStorage.getItem("pf_newestXML");
+    }
+}
+
 function getXML(url)
 {
     var xhr = new XMLHttpRequest;
     xhr.onload = function(){
-        localStorage.setItem("pf_originXML", xhr.responseText);
+        if(!localStorage.getItem("pf_originXML"))
+        {
+            localStorage.setItem("pf_originXML", xhr.responseText);
+            //decoupeXML(localStorage.getItem("pf_originXML"));
+            //decoupera le xml meme s'il n'y a que pf_originXML
+        }
+        else
+        {
+            localStorage.setItem("pf_newestXML", xhr.responseText);
+            inLS_comparaisonXML()
+            clearInterval();
+        }
     };
     xhr.open("GET", url);
     xhr.send();
@@ -22,35 +73,25 @@ function setBadgeNum()
     {
          setTimeout(function(){
             setBadgeNum();
-         }, 1250);
+         }, 250);
     }
 }
 
-localStorage.clear(); //c'est pour debug, pas utile pour la prod en l'etat
+localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des elements deja presents dans localStorage
 
 if(!localStorage.getItem("pf_originXML"))
 {
     getXML('http://51.255.196.206/greg/testXHR/rss.xml');
     //getXML('http://lafabriqueainnovations.com/rss.xml');
 }
+else
+{
+    console.log("Warning error: Primary level");
+}
+
 setInterval(function(){
     getXML('http://51.255.196.206/greg/testXHR/rss.xml');
     //getXML('http://lafabriqueainnovations.com/rss.xml');
-}, 30000);
+}, 10000);
 
 setBadgeNum();
-
-/*
-est-ce que le contexte du plugin permet le localStorage et si oui, est-ce que le contexte est partage entre chaque parties ?
-
-
-script bg fait un xhr, choppe un xml et le stocke dans local storage
-    est-ce qu'on fait un tri en bkg pour virer les images?
-script popup choppe ce xml et le copie dans le localStorage
-script popup parse la copie du xml et stocke le resultat dans un tableau localStorage
-    *** ici bloc pour gerer les differents cas lors de la suppression onclick sur une div du popup
-        si bkg xml et copie xml sont identiques, pas touche au parsing ***
-adapter le badge en fonction du nombre d'item dans le xml.
-    base sur quel xml? l'origine ou la copie modif par script popup ?
-
-*/
