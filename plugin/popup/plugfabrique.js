@@ -42,7 +42,6 @@ function r_DestroyTags(chaine)
 function parseXML(xmlRecup)
 {
     var tags = xmlRecup.getElementsByTagName("item");
-    console.log(tags);
     for (var i = 0; i < tags.length; i++)
     {
         title = tags[i].getElementsByTagName("title");
@@ -96,8 +95,13 @@ function parseXML(xmlRecup)
 
 if(localStorage.getItem("pf_originXML")) //pf = plugin fabrique
 {
-    var xmlReady = prepareXML(localStorage.getItem("pf_originXML"));
-    parseXML(xmlReady);
+    browser.runtime.getBackgroundPage(
+        function(bkg)
+        {
+            var xmlReady = bkg.inBkg_prepareXML(localStorage.getItem("pf_originXML"));
+            parseXML(xmlReady);
+        }
+    );                                                 
 }
 else
 {

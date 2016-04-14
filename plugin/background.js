@@ -1,4 +1,4 @@
-function prepareXML(ls_XML)
+function inBkg_prepareXML(ls_XML)
 {
     if (typeof ls_XML == "string")
     {
@@ -12,14 +12,32 @@ function prepareXML(ls_XML)
     }
 }
 
-function decoupeXML()
+function inBkg_decoupeXML(ls_XML)
 {
+    if(!typeof ls_XML == "string")
+    {
+        console.log("Erreur de type dans inBkg_decoupeXML");
+    }
+    else
+    {
+        var xmlReady = inBkg_prepareXML(ls_XML);
 
+        var tags = xmlReady.getElementsByTagName("item");
+        for (var i = 0; i < tags.length; i++)
+        {
+            var title = tags[i].getElementsByTagName("title");
+            console.log(title);
+            var link = tags[i].getElementsByTagName("link");
+            console.log(link);
+            var description = tags[i].getElementsByTagName("description");
+            console.log(description);
+        }
+    }
 }
 
 function inLS_comparaisonXML()
 {
-    if(localStorage.getItem("pf_originXML") == localStorage.getItem("pf_newestXML"))
+    if(localStorage.getItem("pf_originXML") != localStorage.getItem("pf_newestXML"))
     {
         //ne fais rien
         console.log("inLS_comparaisonXML() = ils sont identiques");
@@ -31,14 +49,14 @@ function inLS_comparaisonXML()
         console.log(localStorage.getItem("pf_newestXML"));
 
 
-        //decoupeXML(localStorage.getItem("pf_newestXML"));
+        inBkg_decoupeXML(localStorage.getItem("pf_newestXML"));
         //fais des trucs
 
         localStorage.pf_originXML = localStorage.getItem("pf_newestXML");
     }
 }
 
-function getXML(url)
+function inBkg_getXML(url)
 {
     var xhr = new XMLHttpRequest;
     xhr.onload = function(){
@@ -52,14 +70,15 @@ function getXML(url)
         {
             localStorage.setItem("pf_newestXML", xhr.responseText);
             inLS_comparaisonXML()
-            clearInterval();
+            clearInterval(debugI);
+            console.log("normalement, setInterval est stop ici");
         }
     };
     xhr.open("GET", url);
     xhr.send();
 }
 
-function setBadgeNum()
+function inBkg_setBadgeNum()
 {
     if(localStorage.getItem("pf_originXML"))
     {
@@ -72,7 +91,7 @@ function setBadgeNum()
     else
     {
          setTimeout(function(){
-            setBadgeNum();
+            inBkg_setBadgeNum();
          }, 250);
     }
 }
@@ -81,17 +100,17 @@ localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des element
 
 if(!localStorage.getItem("pf_originXML"))
 {
-    getXML('http://51.255.196.206/greg/testXHR/rss.xml');
-    //getXML('http://lafabriqueainnovations.com/rss.xml');
+    inBkg_getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    //inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }
 else
 {
     console.log("Warning error: Primary level");
 }
 
-setInterval(function(){
-    getXML('http://51.255.196.206/greg/testXHR/rss.xml');
-    //getXML('http://lafabriqueainnovations.com/rss.xml');
+var debugI = setInterval(function(){
+    inBkg_getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    //inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }, 10000);
 
-setBadgeNum();
+inBkg_setBadgeNum();

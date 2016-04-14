@@ -33,9 +33,6 @@ dans l'article, rajoute un compteur
 ou utiliser du json
 
 
-pas sur :
-il faut deux xml, un pour etre parse et l'autre pour servir de comparaison.
-
 
 au demarrage:
 
@@ -64,14 +61,5 @@ _______________________________________________________________________________
 
 
 --------------------------------------------------------------------------------
-
-script bg fait un xhr, choppe un xml et le stocke dans local storage
-    est-ce qu'on fait un tri en bkg pour virer les images?
-script popup choppe ce xml et le copie dans le localStorage | sur? :s
-script popup parse la copie du xml et stocke le resultat dans un tableau localStorage
-    *** ici bloc pour gerer les differents cas lors de la suppression onclick sur une div du popup
-        si bkg xml et copie xml sont identiques, pas touche au parsing ***
-adapter le badge en fonction du nombre d'item dans le xml.
-    base sur quel xml? l'origine ou la copie modif par script popup ?
 
 */
