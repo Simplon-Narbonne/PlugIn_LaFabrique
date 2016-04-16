@@ -1,58 +1,145 @@
+var tabStr = []; //necessaire pour r_DestroyTags
+function r_DestroyTags(chaine)
+{
+    if (chaine.indexOf('<') == -1 && chaine.indexOf('>') == -1) {
+        return chaine.trim();
+    }
+    a = chaine.indexOf('>');
+    newStr = chaine.slice(a+1, chaine.length);
+    b = newStr.indexOf('<');
+    if(newStr[0] != '<') {
+        tabStr.push(newStr.slice(0, b));
+        if (tabStr[tabStr.length-1] == "") {
+            strFinale = "";
+            for (var k=0; k < (tabStr.length-2);k++) {
+                strFinale += tabStr[k];
+            }
+            tabStr = []; //remet tabStr a 0 avant de renvoyer le resultat final
+            return r_DestroyTags(strFinale);
+        } else {
+            return r_DestroyTags(newStr);
+        }
+    } else {
+        return r_DestroyTags(newStr);
+    }
+}
+
+function inBkg_comparaisonArticles(in_tab2d) //
+{
+    //console.log("inBkg_comparaisonArticles :");
+    var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
+    //console.log(json_tabArticles);
+    //ici algo qui teste chaque article de in_tab2d avec chaque article de localStorage
+
+    for(var i = in_tab2d.length - 1; i >= 0 ; i--)
+    {
+        var found = false;
+        for (var j = 0; j < json_tabArticles.length && !found; j++)
+        {
+            if (in_tab2d[i]["title"] == json_tabArticles[j]["title"])
+            {
+                found = true;
+            }
+        }
+        if (found == false) //donc l'article est nouveau
+        {
+            //console.log(json_tabArticles);
+            json_tabArticles.unshift(in_tab2d[i]);
+            //console.log(json_tabArticles);
+            json_tabArticles.pop();
+            //console.log(json_tabArticles);
+            //je push l'article en premiere position dans json_tabArticles
+            //je sors le dernier article (plus ancien) du json_tabArticles
+        }
+        else
+        {
+            found = false;
+            //je remet found a false et je fais rien d'autre
+        }
+    }
+    json_tabArticles = JSON.stringify(json_tabArticles);
+    //console.log(json_tabArticles);
+    localStorage.setItem("articles", json_tabArticles);
+    //console.log(localStorage.articles);
+    //sorti des boucles je stringify json_tabArticles et je le stock dans localStorage
+}
+
 function inBkg_prepareXML(ls_XML)
 {
     if (typeof ls_XML == "string")
     {
+        //console.log("inBkg_prepareXML : ok je renvoi le xmlReady");
         var parser = new DOMParser();
         var doc = parser.parseFromString(ls_XML, "text/xml");
         return doc;
     }
     else
     {
-        console.log("Erreur de type: string attendu, " + typeof ls_XML+" reçu.");
+        //console.log("Erreur de type: string attendu, " + typeof ls_XML+" reçu.");
     }
 }
 
-function inBkg_decoupeXML(ls_XML)
-{
+function inBkg_decoupeXML(ls_XML) //appele de deux manieres, soit avec origin depuis getxml
+{                                  // soit avec newest depuis comparaisonxml
     if(!typeof ls_XML == "string")
     {
-        console.log("Erreur de type dans inBkg_decoupeXML");
+        //console.log("Erreur de type dans inBkg_decoupeXML. Fermeture.");
     }
     else
     {
+        //console.log("inBkg_decoupeXML appelle inBkg_prepareXML pour avoir xmlReady");
         var xmlReady = inBkg_prepareXML(ls_XML);
-
+        var tabArticles = [];
         var tags = xmlReady.getElementsByTagName("item");
         for (var i = 0; i < tags.length; i++)
         {
             var title = tags[i].getElementsByTagName("title");
-            console.log(title);
+            title = title[0].childNodes[0].nodeValue;
             var link = tags[i].getElementsByTagName("link");
-            console.log(link);
+            link = link[0].childNodes[0].nodeValue;
             var description = tags[i].getElementsByTagName("description");
-            console.log(description);
+            description = r_DestroyTags(description[0].childNodes[0].nodeValue);
+            tabArticles[i] = {
+                "title": title,
+                "link": link,
+                "description": description,
+                "show": true //bool a modifier pour cacher l'article au clic + reload
+            };
+        }
+        if(localStorage.getItem("articles"))
+        {
+            //console.log("inBkg_decoupeXML apres les boucles : articles existe dans LS, appel de inBkg_comparaisonArticles avec tabArticles");
+            inBkg_comparaisonArticles(tabArticles);
+        }
+        else
+        {
+            //console.log("inBkg_decoupeXML apres les boucles : article existe pas, on stringify tab article et on stock dans LS");
+            var json_tabArticles = JSON.stringify(tabArticles);
+            //console.log(json_tabArticles);
+            localStorage.setItem("articles", json_tabArticles);
         }
     }
 }
 
 function inLS_comparaisonXML()
 {
-    if(localStorage.getItem("pf_originXML") != localStorage.getItem("pf_newestXML"))
+    if(localStorage.getItem("pf_originXML") === localStorage.getItem("pf_newestXML"))
     {
+        //console.log("ORIGIN");
+        //console.log(localStorage.getItem("pf_originXML"));
+        //console.log("NEWEST");
+        //console.log(localStorage.getItem("pf_newestXML"));
         //ne fais rien
-        console.log("inLS_comparaisonXML() = ils sont identiques");
+        //console.log("inLS_comparaisonXML() pf_originXML et pf_newestXML sont identiques. Fermeture.");
+        clearInterval(debugI);
     }
     else
     {
-        console.log("inLS_comparaisonXML() = ils sont differents");
-        console.log(localStorage.getItem("pf_originXML"));
-        console.log(localStorage.getItem("pf_newestXML"));
-
-
+        //clearInterval(debugI); //debug : eviter de flood avec setinterval
+        //console.log("normalement, setInterval est stop ici");
+        //console.log("inLS_comparaisonXML passe dans le else et appelle inBkg_decoupeXML avec pf_newestXML");
         inBkg_decoupeXML(localStorage.getItem("pf_newestXML"));
-        //fais des trucs
-
-        localStorage.pf_originXML = localStorage.getItem("pf_newestXML");
+        localStorage.setItem("pf_originXML", localStorage.getItem("pf_newestXML"));
     }
 }
 
@@ -62,19 +149,22 @@ function inBkg_getXML(url)
     xhr.onload = function(){
         if(!localStorage.getItem("pf_originXML"))
         {
+            //console.log("inBkg_getXML premier passage, appelle inBkg_decoupeXML");
             localStorage.setItem("pf_originXML", xhr.responseText);
+            inBkg_decoupeXML(localStorage.getItem("pf_originXML"));
             //decoupeXML(localStorage.getItem("pf_originXML"));
             //decoupera le xml meme s'il n'y a que pf_originXML
         }
         else
         {
+            //console.log("inBkg_getXML passages suivants, appelle inLS_comparaisonXML");
+            //console.log("newest = ");
+            //console.log(xhr.responseText);
             localStorage.setItem("pf_newestXML", xhr.responseText);
-            inLS_comparaisonXML()
-            clearInterval(debugI);
-            console.log("normalement, setInterval est stop ici");
+            inLS_comparaisonXML();
         }
     };
-    xhr.open("GET", url);
+    xhr.open("GET", url+"?nocache="+ Math.random()+ Math.random() + Math.random()); //oblige a afficher un xhr qui n'est pas en cache
     xhr.send();
 }
 
@@ -100,17 +190,19 @@ localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des element
 
 if(!localStorage.getItem("pf_originXML"))
 {
-    inBkg_getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    //console.log("lancement initial");
+    inBkg_getXML('http://51.255.196.206/greg/testXHR/rss2.xml');
+    inBkg_setBadgeNum();
     //inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }
 else
 {
-    console.log("Warning error: Primary level");
+    //console.log("Warning error: Primary level");
 }
 
 var debugI = setInterval(function(){
+    //console.log("appel du rss2");
     inBkg_getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    inBkg_setBadgeNum();
     //inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }, 10000);
-
-inBkg_setBadgeNum();

@@ -13,7 +13,7 @@
 stocke 2 xml dans le localStorage --
 
 
- A ------  A
+A ------  A
 \/        \/
 (si localStorage=>items == vide, toutes les divs ont etees cliquees, donc on fait une div par defaut dans html)
 
@@ -21,9 +21,26 @@ je dois pas parser et afficher directement le xml mais extraire les donnees dans
 
 peut-etre mettre les donnees dans un tableau associatif da localStorage:
 
-item =>
-    date => article 1
-    date => article 2
+Articles =>
+    articleID => titre : blabla
+              => description : blabla
+              => link : blabla
+              => Show : true/flase
+
+    articleID => titre : blabla
+              => description : blabla
+              => link : blabla
+              => Show : true/flase
+
+if articleID != de ce qu'il y a dans Articles
+    ajoute articleID et son contenu dans Articles
+sinon
+    osef on fait rien
+
+
+sur le popup ___
+                |
+
 
     et comparaison des dates pour voir si l'article existe deja
     attribution de l'ID une fois qu'on est sur que l'article n'existe pas deja
@@ -61,5 +78,7 @@ _______________________________________________________________________________
 
 
 --------------------------------------------------------------------------------
+au lieu de supprimer un article au clic, affecte un booleen False a une variable servant au script pour determiner si l'article doit etre affiche ou pas, puis recharge la page.
+
 
 */

@@ -101,7 +101,7 @@ if(localStorage.getItem("pf_originXML")) //pf = plugin fabrique
             var xmlReady = bkg.inBkg_prepareXML(localStorage.getItem("pf_originXML"));
             parseXML(xmlReady);
         }
-    );                                                 
+    );
 }
 else
 {
