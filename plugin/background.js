@@ -39,6 +39,29 @@ function r_DestroyTags(chaine)
     }
 }
 
+function inBkg_setBadgeNum()
+{
+    if(localStorage.getItem("articles"))
+    {
+        var count = 0;
+        var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
+        for(var i = 0; i < json_tabArticles.length; i++)
+        {
+            if(json_tabArticles[i].show == true)
+            {
+                count += 1;
+            }
+        }
+        browser.browserAction.setBadgeText({text: count.toString()});
+    }
+    else
+    {
+        setTimeout(function(){
+            inBkg_setBadgeNum();
+        }, 250);
+    }
+}
+
 function inBkg_comparaisonArticles(in_tab2d) //
 {
     //console.log("inBkg_comparaisonArticles :");
@@ -133,6 +156,7 @@ function inBkg_decoupeXML(ls_XML) //appele de deux manieres, soit avec origin de
             //console.log(json_tabArticles);
             localStorage.setItem("articles", json_tabArticles);
         }
+        inBkg_setBadgeNum();
     }
 }
 
@@ -183,31 +207,12 @@ function inBkg_getXML(url)
     xhr.send();
 }
 
-function inBkg_setBadgeNum()
-{
-    if(localStorage.getItem("pf_originXML"))
-    {
-        var ls_getXML = localStorage.getItem("pf_originXML");
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(ls_getXML, "text/xml");
-        var itemCount = doc.getElementsByTagName("item").length;
-        browser.browserAction.setBadgeText({text: itemCount.toString()});
-    }
-    else
-    {
-         setTimeout(function(){
-            inBkg_setBadgeNum();
-         }, 250);
-    }
-}
-
 localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des elements deja presents dans localStorage
 
 if(!localStorage.getItem("pf_originXML"))
 {
     //console.log("lancement initial");
     inBkg_getXML('http://51.255.196.206/greg/testXHR/rss2.xml');
-    inBkg_setBadgeNum();
     //inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }
 else
@@ -218,6 +223,5 @@ else
 var debugI = setInterval(function(){
     //console.log("appel du rss2");
     inBkg_getXML('http://51.255.196.206/greg/testXHR/rss.xml');
-    inBkg_setBadgeNum();
     //inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }, 10000);
