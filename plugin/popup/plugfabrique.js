@@ -3,7 +3,6 @@ function parseXML()
     var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
     for(var i = 0; i < json_tabArticles.length; i++)
     {
-
         getExistDiv = document.querySelector("#Contenu");
         var dynDiv = "div" + (i+1);
         createDivAuto = document.createElement(dynDiv);
@@ -51,45 +50,33 @@ var hideDiv1 = document.querySelector("div1");
 var hideDiv2 = document.querySelector("div2");
 var hideDiv3 = document.querySelector("div3");
 
-hideDiv1.addEventListener("click", function(e){
-    var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
-    json_tabArticles[0].show = false;
-    json_tabArticles = JSON.stringify(json_tabArticles);
-    localStorage.setItem("articles", json_tabArticles);
-    window.location.reload();
-}, false);
-
-hideDiv2.addEventListener("click", function(e){
-    var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
-    json_tabArticles[1].show = false;
-    json_tabArticles = JSON.stringify(json_tabArticles);
-    localStorage.setItem("articles", json_tabArticles);
-    window.location.reload();
-}, false);
-
-hideDiv3.addEventListener("click", function(e){
-    var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
-    json_tabArticles[2].show = false;
-    json_tabArticles = JSON.stringify(json_tabArticles);
-    localStorage.setItem("articles", json_tabArticles);
-    window.location.reload();
-}, false);
-
-
-/*if(localStorage.getItem("pf_originXML")) //pf = plugin fabrique
+function hideDiv(divID)
 {
+    var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
+    json_tabArticles[divID].show = false;
+    json_tabArticles = JSON.stringify(json_tabArticles);
+    localStorage.setItem("articles", json_tabArticles);
     browser.runtime.getBackgroundPage(
         function(bkg)
         {
-            var xmlReady = bkg.inBkg_prepareXML(localStorage.getItem("pf_originXML"));
-            parseXML(xmlReady);
+            bkg.inBkg_setBadgeNum();
         }
     );
+    window.location.reload();
 }
-else
-{
-    console.log("pf_originXML n'existe pas dans le localStorage");
-}*/
+
+hideDiv1.addEventListener("click", function(e){
+    hideDiv(0);
+}, false);
+
+hideDiv2.addEventListener("click", function(e){
+    hideDiv(1);
+}, false);
+
+hideDiv3.addEventListener("click", function(e){
+    hideDiv(2);
+}, false);
+
 
 /*
     au clic :
