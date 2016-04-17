@@ -21,6 +21,8 @@ function parseXML()
             createLink.setAttribute("href", dynLink);
             createLink.setAttribute("class", "lien");
             createLink.setAttribute("target", "_blank");
+            /*var linkID = "link"+(i);
+            createLink.setAttribute("id", linkID);*/
             createLink.appendChild(createDivArticle);
             createDivAuto.appendChild(createLink);
             getExistDiv.appendChild(createDivAuto);
@@ -46,10 +48,6 @@ function parseXML()
 
 parseXML();
 
-var hideDiv1 = document.querySelector("div1");
-var hideDiv2 = document.querySelector("div2");
-var hideDiv3 = document.querySelector("div3");
-
 function hideDiv(divID)
 {
     var json_tabArticles = JSON.parse(localStorage.getItem("articles"));
@@ -62,20 +60,39 @@ function hideDiv(divID)
             bkg.inBkg_setBadgeNum();
         }
     );
-    window.location.reload();
+
+    var reload = setTimeout(function(){
+        window.location.reload();
+        clearTimeout(reload);
+    },100);
 }
 
-hideDiv1.addEventListener("click", function(e){
-    hideDiv(0);
-}, false);
+if(document.querySelector("div1 a"))
+{
+    var hideDiv1 = document.querySelector("div1 a");
+    hideDiv1.addEventListener("click", function(e){
+        hideDiv(0);
+    }, false);
+}
 
-hideDiv2.addEventListener("click", function(e){
-    hideDiv(1);
-}, false);
 
-hideDiv3.addEventListener("click", function(e){
-    hideDiv(2);
-}, false);
+if(document.querySelector("div2 a"))
+{
+    var hideDiv2 = document.querySelector("div2 a");
+    hideDiv2.addEventListener("click", function(e){
+        hideDiv(1);
+    }, false);
+}
+
+if(document.querySelector("div3 a"))
+{
+    var hideDiv3 = document.querySelector("div3 a");
+    hideDiv3.addEventListener("click", function(e){
+        hideDiv(2);
+    }, false);
+}
+
+
 
 
 /*

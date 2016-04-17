@@ -185,25 +185,28 @@ function inLS_comparaisonXML()
 function inBkg_getXML(url)
 {
     var xhr = new XMLHttpRequest;
-    xhr.onload = function(){
-        if(!localStorage.getItem("pf_originXML"))
-        {
-            //console.log("inBkg_getXML premier passage, appelle inBkg_decoupeXML");
-            localStorage.setItem("pf_originXML", xhr.responseText);
-            inBkg_decoupeXML(localStorage.getItem("pf_originXML"));
-            //decoupeXML(localStorage.getItem("pf_originXML"));
-            //decoupera le xml meme s'il n'y a que pf_originXML
+    xhr.onreadystatechange=function()
+    {
+        if (xhr.readyState==4 && xhr.status==200) {
+            if(!localStorage.getItem("pf_originXML"))
+            {
+                //console.log("inBkg_getXML premier passage, appelle inBkg_decoupeXML");
+                localStorage.setItem("pf_originXML", xhr.responseText);
+                inBkg_decoupeXML(localStorage.getItem("pf_originXML"));
+                //decoupeXML(localStorage.getItem("pf_originXML"));
+                //decoupera le xml meme s'il n'y a que pf_originXML
+            }
+            else
+            {
+                //console.log("inBkg_getXML passages suivants, appelle inLS_comparaisonXML");
+                //console.log("newest = ");
+                //console.log(xhr.responseText);
+                localStorage.setItem("pf_newestXML", xhr.responseText);
+                inLS_comparaisonXML();
+            }
         }
-        else
-        {
-            //console.log("inBkg_getXML passages suivants, appelle inLS_comparaisonXML");
-            //console.log("newest = ");
-            //console.log(xhr.responseText);
-            localStorage.setItem("pf_newestXML", xhr.responseText);
-            inLS_comparaisonXML();
-        }
-    };
-    xhr.open("GET", url+"?nocache="+ Math.random()+ Math.random() + Math.random()); //oblige a afficher un xhr qui n'est pas en cache
+    }
+    xhr.open("GET", url + "?nocache="+ Math.random()); //oblige a afficher un xhr qui n'est pas en cache
     xhr.send();
 }
 
