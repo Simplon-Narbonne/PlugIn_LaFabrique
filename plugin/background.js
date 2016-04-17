@@ -1,3 +1,18 @@
+/* explications pour r_DestroyTags()
+  ***a besoin d'un tableau global vide (tabStr) et d'une string en parametre (chaine)***
+  si (chaine) n'a aucun chevron, retourne (chaine) amputé des espaces en debut et fin de string [.trim()].
+  cherche le premier chevron fermant dans (chaine) et prend son index (a).
+  supprime de (chaine) l'intervale entre l'index 0 et (b+1), affecte le resultat a (newStr).
+  cherche le premier chevron ouvrant dans (newStr) et prend son index (b).
+  si le premier caractere de (newStr) n'est pas un chevron ouvrant,,
+    ajoute dans (tabStr) la string dans l'intervale entre l'index 0 et (b).
+    si le dernier index de (tabStr) est une string vide,,
+      declare et affecte une string vide a (strFinale).
+      |parcours (tabStr) avec une boucle et concatene a chaque tour dans (strFinale), sauf 2 derniers index.|
+      vide (tabStr) pour les prochains appels de fonction.
+      rappelle (r_DestroyTags) et retourne sa valeur
+*/
+
 var tabStr = []; //necessaire pour r_DestroyTags
 function r_DestroyTags(chaine)
 {
@@ -31,12 +46,12 @@ function inBkg_comparaisonArticles(in_tab2d) //
     //console.log(json_tabArticles);
     //ici algo qui teste chaque article de in_tab2d avec chaque article de localStorage
 
-    for(var i = in_tab2d.length - 1; i >= 0 ; i--)
+    for(var i = in_tab2d.length - 1; i >= 0 ; i--) //fait partir le compteur a l'envers pour choisir l'article le moins recent/le plus proche du dernier article en memoire en premier.
     {
         var found = false;
         for (var j = 0; j < json_tabArticles.length && !found; j++)
         {
-            if (in_tab2d[i]["title"] == json_tabArticles[j]["title"])
+            if (in_tab2d[i]["title"] == json_tabArticles[j]["title"]) //compare sur les titres
             {
                 found = true;
             }
