@@ -21,8 +21,6 @@ function parseXML()
             createLink.setAttribute("href", dynLink);
             createLink.setAttribute("class", "lien");
             createLink.setAttribute("target", "_blank");
-            /*var linkID = "link"+(i);
-            createLink.setAttribute("id", linkID);*/
             createLink.appendChild(createDivArticle);
             createDivAuto.appendChild(createLink);
             getExistDiv.appendChild(createDivAuto);
@@ -75,7 +73,6 @@ if(document.querySelector("div1 a"))
     }, false);
 }
 
-
 if(document.querySelector("div2 a"))
 {
     var hideDiv2 = document.querySelector("div2 a");
@@ -92,21 +89,9 @@ if(document.querySelector("div3 a"))
     }, false);
 }
 
-
-
-
-/*
-    au clic :
-    met show a false
-    rappelle le setBadge depuis le background
-    actualise la page
-*/
-
-
-/*browser.runtime.getBackgroundPage(
-    function(bkg)
-    {
-        parseXML(bkg.mavar);
-    }
-);
-*/
+if(!document.querySelector("div1 a") && !document.querySelector("div2 a") && !document.querySelector("div3 a"))
+{
+    var getExistDiv = document.querySelector("#Contenu");
+    var noNews = "<div class='article'><h1 class='titre'>Pas de nouvelles. Revenez plus tard !</h1></div>";
+    getExistDiv.innerHTML = noNews;
+}

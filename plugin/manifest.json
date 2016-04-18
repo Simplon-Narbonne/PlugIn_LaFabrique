@@ -30,5 +30,5 @@
     "default_popup": "popup/plugfabrique.html"
   },
 
-  "permissions": ["tabs"]
+  "permissions": ["tabs", "webRequestBlocking"]
 }
