@@ -133,11 +133,11 @@ function inBkg_getXML(url) {
     xhr.send();
 }
 
-localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des elements deja presents dans localStorage
+//localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des elements deja presents dans localStorage
 
 if(!localStorage.getItem("pf_originXML"))
-    inBkg_getXML('http://51.255.196.206/greg/testXHR/rss2.xml');
+    inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 
 var debugI = setInterval(function(){
-    inBkg_getXML('http://51.255.196.206/greg/testXHR/rss.xml');
+    inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 }, 20000);

@@ -52,12 +52,15 @@ function hideDiv(divID)
     json_tabArticles[divID].show = false;
     json_tabArticles = JSON.stringify(json_tabArticles);
     localStorage.setItem("articles", json_tabArticles);
-    browser.runtime.getBackgroundPage(
-        function(bkg)
-        {
-            bkg.inBkg_setBadgeNum();
+    /*browser.extension.getBackgroundPage(
+        function(bkg) {
+            //bkg.inBkg_setBadgeNum();
         }
-    );
+    );*/
+    (function () {
+        var bkg = browser.extension.getBackgroundPage();
+        bkg.inBkg_setBadgeNum();
+    })();
 
     var reload = setTimeout(function(){
         window.location.reload();
