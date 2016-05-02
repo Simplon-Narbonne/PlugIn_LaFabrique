@@ -8,10 +8,11 @@
     src:  url('fonts/Quicksand-Regular.ttf') format('truetype');
 }
 
-html
+body
 {
   height: auto;
-  width: 500px;
+  width: 400px;
+  align-items: center;
   margin:0;
   overflow: hidden;
   background: #272827; /* Old browsers */
@@ -27,6 +28,7 @@ html
   width: 380px;
   margin-top: 10px;
   background: #cd0051;
+  margin-bottom: 10px;
   border-radius:12.5px;
   margin-left:5px ;
   margin-right: 5px;
