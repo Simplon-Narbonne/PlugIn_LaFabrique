@@ -57,10 +57,10 @@ function hideDiv(divID)
             //bkg.inBkg_setBadgeNum();
         }
     );*/
-    (function () {
+    //(function () {
         var bkg = browser.extension.getBackgroundPage();
         bkg.inBkg_setBadgeNum();
-    })();
+    //})();
 
     var reload = setTimeout(function(){
         window.location.reload();

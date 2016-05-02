@@ -135,8 +135,10 @@ function inBkg_getXML(url) {
 
 //localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des elements deja presents dans localStorage
 
-if(!localStorage.getItem("pf_originXML"))
+/*if(!localStorage.getItem("pf_originXML"))
     inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
+*/
+inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 
 var debugI = setInterval(function(){
     inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
