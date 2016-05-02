@@ -1,16 +1,11 @@
 # PlugIn_LaFabrique
 
-
-[TOC]
-
-
-
 ##L'add-on se décline en deux versions.
 
-++**fabrique.xpi**++ :
+__**fabrique.xpi**__ :
 Cette version assure la persistence des données, c'est la version release.
 
-++**fabrique_dev.xpi**++ :
+__**fabrique_dev.xpi**__ :
 Cette version efface les données dès que le navigateur est fermé. Elle permet d'étudier le comportement de l'add-on sans attendre des news sur le site de [la fabrique à innovations](http://lafabriqueainnovations.com) et n'est utile qu'à ceux qui veulent mettre les mains dans le camboui.
 
 ## Installation
