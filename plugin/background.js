@@ -41,7 +41,7 @@ function inBkg_setBadgeNum() {
     } else {
         setTimeout(function(){
             inBkg_setBadgeNum();
-        }, 250);
+        }, 200);
     }
 }
 
@@ -108,7 +108,11 @@ function inBkg_decoupeXML(ls_XML) {
 
 function inLS_comparaisonXML() {
     if(localStorage.getItem("pf_originXML") === localStorage.getItem("pf_newestXML"))
-        //clearInterval(debugI);
+    {
+        inBkg_setBadgeNum();
+        return 0;
+    }
+
     else {
         inBkg_decoupeXML(localStorage.getItem("pf_newestXML"));
         localStorage.setItem("pf_originXML", localStorage.getItem("pf_newestXML"));
@@ -133,13 +137,10 @@ function inBkg_getXML(url) {
     xhr.send();
 }
 
-//localStorage.clear(); //c'est pour debug, evite d'avoir a se soucier des elements deja presents dans localStorage
+//localStorage.clear();
 
-/*if(!localStorage.getItem("pf_originXML"))
-    inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
-*/
 inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 
 var debugI = setInterval(function(){
     inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
-}, 20000);
+}, 3600000);

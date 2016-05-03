@@ -3,10 +3,11 @@
 ##L'add-on se décline en deux versions.
 
 **fabrique.xpi** :
-Cette version assure la persistence des données, c'est la version release.
+Cette version assure la persistence des données, c'est la version prod.
 
 **fabrique_dev.xpi** :
-Cette version efface les données dès que le navigateur est fermé. Elle permet d'étudier le comportement de l'add-on sans attendre des news sur le site de [la fabrique à innovations](http://lafabriqueainnovations.com) et n'est utile qu'à ceux qui veulent mettre les mains dans le camboui.
+Cette version n'est utile qu'à ceux qui veulent comprendre le comportement de l'add-on, sans attendre de news sur le site de [la fabrique à innovations](http://lafabriqueainnovations.com).
+Les données sont effacées à chaque lancement du navigateur et les requêtes xhr se font toutes les 10 secondes.
 
 ## Installation
 
