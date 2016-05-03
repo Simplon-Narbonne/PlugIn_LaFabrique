@@ -19,8 +19,3 @@ Dans la barre **search** ou **recherche**, entrez `xpinstall.signatures.required
 Double-cliquez sur le résultat pour changer la valeur `true` en `false`
 
 Ensuite depuis la page d'accueil de firefox, faites ctrl+o et pointez vers le fichier .xpi que vous souhaitez installer.
-
-
-
-## Annexes
-> [voici le cahier des charges](https://github.com/Simplon-Narbonne/PlugIn_LaFabrique/blob/master/cahier-des-charges.md)

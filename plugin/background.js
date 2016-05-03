@@ -33,10 +33,10 @@ function inBkg_setBadgeNum() {
         }
         if( count == 0 ){
             browser.browserAction.setBadgeText({text: ""});
-            browser.browserAction.setIcon({path: "../images/ico_baseNoNews1.png"});
+            browser.browserAction.setIcon({path: "../images/button/ico_baseNoNews3.png"});
         } else {
             browser.browserAction.setBadgeText({text: count.toString()});
-            browser.browserAction.setIcon({path: "../images/ico_rouge2.png"});
+            browser.browserAction.setIcon({path: "../images/ico_rouge3.png"});
         }
     } else {
         setTimeout(function(){
@@ -108,7 +108,7 @@ function inBkg_decoupeXML(ls_XML) {
 
 function inLS_comparaisonXML() {
     if(localStorage.getItem("pf_originXML") === localStorage.getItem("pf_newestXML"))
-        clearInterval(debugI);
+        //clearInterval(debugI);
     else {
         inBkg_decoupeXML(localStorage.getItem("pf_newestXML"));
         localStorage.setItem("pf_originXML", localStorage.getItem("pf_newestXML"));
