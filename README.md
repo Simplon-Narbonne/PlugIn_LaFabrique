@@ -1,5 +1,8 @@
 # PlugIn_LaFabrique
 
+##Incompatibilité
+Actuellement, il existe un conflit avec NoScript sur firefox. NoScript ne permet pas d'autoriser le script du plugin a fonctionner dans le background.
+
 ##L'add-on se décline en deux versions.
 
 **fabrique.xpi** :
