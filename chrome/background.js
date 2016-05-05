@@ -144,4 +144,4 @@ inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
 
 var debugI = setInterval(function(){
     inBkg_getXML('http://lafabriqueainnovations.com/rss.xml');
-}, 10000);
+}, 3600000);
