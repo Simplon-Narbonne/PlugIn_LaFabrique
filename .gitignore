@@ -1,10 +1,2 @@
 .gitignore
-le-site/
-telechargement
-images/*.xcf
-cahier-des-charges-plugin-v0.1.odt
-cahier des charges plug V2.odt
-cahier-des-charges-1
-cahier-des-charges-plug-v2.odt
-fabinnov/*
-images/log6-fabinnov-1.xcf
+lfai.pem
