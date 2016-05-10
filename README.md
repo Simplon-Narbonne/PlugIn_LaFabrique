@@ -4,6 +4,10 @@
 Cet addon offre un nouveau moyen de distribution au flux rss de [la fabrique à innovations](http://lafabriqueainnovations.com) en affichant dans un popup les trois dernières news publiées.
 Si des news sont disponibles, l'icone devient rouge et un badge indique le nombre de news restant à lire. Sinon  l'icone devient grise.
 
+##Téléchargez l'add-on
+Pour vous procurer les fichiers, [cliquez sur ce lien !](https://github.com/Simplon-Narbonne/PlugIn_LaFabrique/archive/master.zip)
+Récupérez les fichiers qui vous intéressent dans cette archive et suivez la procédure ci-dessous.
+
 ##L'add-on est disponible pour Chrome et Firefox
 Chaque navigateur possède deux versions de l'extension, une version normale et une version dévelopeur reconnaissable par son suffixe `_dev`
 
